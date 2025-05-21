@@ -1,0 +1,30 @@
+---
+- name: Set Windows hostname & Domain join
+  hosts: all
+  tasks:
+    - name: Set the hostname
+      ansible.windows.win_hostname:
+        name: '{{ win_hostname }}'
+      register: res
+      tags: hostname
+
+    - name: hostname reboot
+      ansible.windows.win_reboot:
+      when: res.reboot_required
+      tags: hostname
+
+    - name: Join to the Domain
+      ansible.windows.win_domain_membership:
+        dns_domain_name: aamu.edu
+        hostname: '{{ win_hostname }}'
+        domain_admin_user: ansiblesvc@aamu.edu
+        domain_admin_password: GHCmd30nSIOnx!
+        domain_ou_path: "OU=Domain Servers,DC=aamu,DC=edu"
+        state: domain
+      register: domain_state
+      tags: domainjoin
+
+    - name: Domain join reboot
+      ansible.windows.win_reboot:
+      when: domain_state.reboot_required
+      tags: domainjoin
