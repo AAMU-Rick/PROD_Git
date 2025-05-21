@@ -1,0 +1,17 @@
+---
+- name: First Run
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Install nano
+    ansible.builtin.dnf:
+      name: nano
+      state: latest
+
+  - name: Disable SELinux
+    ansible.posix.selinux:
+      state: disabled
+
+  - name: Reboot the machine
+    ansible.builtin.reboot:
