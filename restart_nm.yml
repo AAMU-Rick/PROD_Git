@@ -1,0 +1,10 @@
+---
+- name: Freshservice Agent Install
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Run the restart command for NetworkManager
+    ansible.builtin.command:
+
+        cmd: systemctl restart NetworkManager
