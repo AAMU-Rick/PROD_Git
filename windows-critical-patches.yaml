@@ -1,0 +1,17 @@
+---
+- name: Install Critical and Security Patches on Windows
+  hosts: windows
+  gather_facts: false
+  tasks:
+    - name: Install critical and security updates
+      ansible.windows.win_updates:
+        category_names:
+          - CriticalUpdates
+          - SecurityUpdates
+        state: installed
+        reboot: true
+      register: update_result
+
+    - name: Display summary of updates installed
+      ansible.builtin.debug:
+        msg: "Reboot required: {{ update_result.reboot_required }}, Updated count: {{ update_result.installed_count }}"
