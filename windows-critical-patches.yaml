@@ -8,6 +8,7 @@
         category_names:
           - CriticalUpdates
           - SecurityUpdates
+          - UpdateRollups
         state: installed
         reboot: true
       register: update_result
