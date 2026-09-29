@@ -3,19 +3,20 @@
   hosts: all
   become: true
   tasks:
-    - name: Configure Wired Connection 1
-      community.general.nmcli:
-        conn_name: "Wired connection 1"
-        ifname: "ens7"
-        mtu: 1500
-        state: present
-    - name: Configure ens3
-      community.general.nmcli:
-        conn_name: "ens3"
-        ifname: "ens3"
-        mtu: 1500
-        state: present
-        notify: Restart NetworkManager
+  - name: Configure Wired Connection 1
+    community.general.nmcli:
+      conn_name: "Wired connection 1"
+      ifname: "ens7"
+      mtu: 1500
+      state: present
+  
+  - name: Configure ens3
+    community.general.nmcli:
+      conn_name: "ens3"
+      ifname: "ens3"
+      mtu: 1500
+      state: present
+      notify: Restart NetworkManager
         
   handlers:
   - name: Restart NetworkManager
